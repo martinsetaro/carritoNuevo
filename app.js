@@ -1,8 +1,10 @@
 let box = document.querySelector('.box');
 let contenedorCarrito = document.querySelector('.box_carrito')
+let precioFinal = document.querySelector('.precioFinal');
 
 let cart=[];
 let prod =[];
+
 
 let productos = [
     {
@@ -36,7 +38,7 @@ productos.forEach( item =>{
 box.innerHTML +=` <div class="card">
 <img class="item_img" src=${item.img} alt=${item.titulo}/>
 <h2 class="item_title">${item.titulo}</h2>
-<p class="item_price">$ ${item.precio}</p>
+<p class="item_price">${item.precio}</p>
 <button class="btn_enviar" data-id=${item.id}>Comprar</button>
 </div>`
 
@@ -58,7 +60,7 @@ btn.forEach( item  => {
        prod = [
         {id:id,
         titulo:titulo,
-    precio:Number(precio),
+    precio:precio,
     img:img,
     cantidad:cantidad
 }
@@ -67,8 +69,8 @@ btn.forEach( item  => {
 
     agregarCarrito(titulo,precio,img,cantidad,id)
     mostrarItem();
-   
-    
+    totalCompra();
+  
 
     })
 })
@@ -91,8 +93,8 @@ function agregarCarrito(titulo,precio,img,cantidad,id){
         
     }   
     limpiarHtml();
+ 
 
-  console.log(cart)
   }
 
 
@@ -104,9 +106,9 @@ function mostrarItem(){
       <h2>${item.titulo}</h2>
       <p> ${item.precio}</p>
       <input class="valorInput" type="number" min="1" value="${item.cantidad}"/>
-      <p>${item.precio}</p>
       <button class="btn_borrar" data-id=${item.id}>X</button>
-      <p>${item.precio}</p>
+      <p>${Number(item.precio)*item.cantidad}</p>
+       
       
       </div>`
 
@@ -116,16 +118,44 @@ function mostrarItem(){
 
 }
 
+
+
 function limpiarHtml(){
     while(contenedorCarrito.firstChild){
-        contenedorCarrito.firstChild.remove(contenedorCarrito.firstChild)
+        contenedorCarrito.removeChild(contenedorCarrito.firstChild)
     }
 }
 
 
 contenedorCarrito.addEventListener('click',(e)=>{
-  console.log(e.target.querySelector('.btn_borrar'))
+  if(e.target.classList.contains('btn_borrar')){
+        let productoId = e.target.getAttribute('data-id');
+        cart = cart.filter(item => item.id != productoId);
+        }
+        
+        
+       
+           totalCompra()
+           limpiarHtml() 
+            mostrarItem()
+          
+  
+  
     })
+
+
+    function totalCompra(){
+        let total = 0;
+        cart.forEach( item => {
+            total += Number(item.precio)*item.cantidad;
+            console.log(total)
+             precioFinal.innerHTML = `<h2>Su compra es de = ${total}</h2>`;
+        } )
+    }
+
+
+
+  
 
 
 

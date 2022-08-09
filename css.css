@@ -35,7 +35,7 @@ body
 .box_carrito 
 {
     width: 50rem;
-    height: 30rem;
+    height: auto;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -58,4 +58,11 @@ body
 .titulo_carrito h2 
 {
     text-align: center;
+}
+.importe 
+{
+    width: 50rem;
+    height: 8rem;
+    margin: 0 auto;
+    background-color: #ffffff;
 }
